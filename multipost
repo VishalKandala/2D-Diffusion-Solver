@@ -1,0 +1,15 @@
+#!/usr/bin/bash
+
+ml purge 
+
+ml load matplotlib
+
+echo "Changing directory to src/libs/"
+
+cd $PWD/src/libs/
+
+echo "running post Processing"
+
+./post $1 $2 $3 $4 $5
+
+echo "Post Processing successfull"

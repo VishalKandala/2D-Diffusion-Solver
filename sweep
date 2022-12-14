@@ -1,0 +1,29 @@
+#!/usr/bin/bash
+
+echo "Sweeping data"
+
+cd $PWD/data/
+
+rm *.csv
+
+echo "Data Sweeped"
+
+echo "Sweeping Plots"
+
+cd ../plts/
+ 
+rm *.png
+
+rm *.eps
+
+echo  "Plots Sweeped"
+
+echo "Sweeping Batch outputs"
+
+cd ../batchproc/outputs/
+
+rm * 
+
+echo "Batch outputs Sweeped"
+
+cd ../../

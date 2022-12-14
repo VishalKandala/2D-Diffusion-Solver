@@ -1,0 +1,121 @@
+#!/sw/eb/sw/Python/3.8.6-GCCcore-10.2.0/bin/python
+from numpy import *
+from matplotlib.pyplot import *
+import sys
+from os import *
+##########
+##########
+def speedup(tarray):
+	sp=ones(len(tarray))
+	for i in range(len(tarray)):
+		sp[i]=tarray[-1,4]/tarray[i,4]
+	return sp
+
+#########
+#########
+vis=1
+lw=0.3
+fs=13
+ts=18
+style.use('seaborn-ticks')
+rcParams['axes.linewidth']=0.01
+rcParams['axes.prop_cycle']=cycler(color=["r", "#e94cdc", "0.1"])
+rcParams['font.size']=fs
+rcParams['legend.fontsize']=ts
+c=int(sys.argv[3])
+sc=int(sys.argv[4])
+if (sc==1 or sc==2):
+	fl1,flg2=0,0;
+	tgresfile="../../data/timegmres.csv"
+	tgsfile="../../data/timegs.csv"
+	if (path.exists(tgresfile)):
+		flg1=1
+		tgres=loadtxt(tgresfile,delimiter=",")
+		sgres=speedup(tgres)
+	if (path.exists(tgsfile)):
+		flg2=1
+		tgs=loadtxt(tgsfile,delimiter=",")
+		sgs=speedup(tgs)
+
+	figdir="../../plts/"
+	figname="speedup0"
+	figtypes=[".eps",".png"]
+	figfile=figdir+figname+figtypes[c-1]
+	fig,ax=subplots(figsize=(7,7))
+	ax.set(title="Strong Scalability",xlabel="No.of Processors (N)",ylabel="Speedup($ \\frac{t_{1}}{t_{N}} $)")
+	ax.plot(tgres[:,1],sgres,color='k',label="GMRES")
+#	ax.plot(tgs[:,1],sgs,color='r',label="Gauss Siedel")
+	ax.legend()
+	ax.tick_params(which='both',direction='in')
+	ax.grid(axis="x",color="green",alpha=.3,linewidth=2,linestyle=":")
+	ax.grid(axis="y",color="black",alpha=.5,linewidth=.5)
+	fig.savefig(figfile,dpi=300)
+
+	figdir="../../plts/"
+	figname="speedup1"
+	figtypes=[".eps",".png"]
+	figfile=figdir+figname+figtypes[c-1]
+	fig,ax=subplots(figsize=(7,7))
+	ax.set(title="Strong Scalability",xlabel="No.of Processors (N)",ylabel="Speedup($ \\frac{t_{1}}{t_{N}} $)")
+#	ax.plot(tgres[:,1],sgres,color='k',label="GMRES")
+	ax.plot(tgs[:,1],sgs,color='r',label="Gauss Siedel")
+	ax.legend()
+	ax.tick_params(which='both',direction='in')
+	ax.grid(axis="x",color="green",alpha=.3,linewidth=2,linestyle=":")
+	ax.grid(axis="y",color="black",alpha=.5,linewidth=.5)
+	ax.grid(True,which='both')
+	fig.savefig(figfile,dpi=300)
+
+	figdir="../../plts/"
+	figname="iter1"
+	figtypes=[".eps",".png"]
+	figfile=figdir+figname+figtypes[c-1]
+	fig,ax=subplots(figsize=(7,7))
+	ax.set(title="Convergence",xlabel="No.of Processors (N)",ylabel="Iterations (k)")
+#	ax.plot(tgres[:,1],sgres,color='k',label="GMRES")
+	ax.plot(tgs[:,1],tgs[:,0],color='r',label="Gauss Siedel")
+	ax.legend()
+	ax.tick_params(which='both',direction='in')
+	ax.grid(axis="x",color="green",alpha=.3,linewidth=2,linestyle=":")
+	ax.grid(axis="y",color="black",alpha=.5,linewidth=.5)
+	fig.savefig(figfile,dpi=300)
+
+
+	figdir="../../plts/"
+	figname="iter0"
+	figtypes=[".eps",".png"]
+	figfile=figdir+figname+figtypes[c-1]
+	fig,ax=subplots(figsize=(7,7))
+	ax.set(title="Convergence",xlabel="No.of Processors (N)",ylabel="Iterations (k)")
+#	ax.plot(tgres[:,1],sgres,color='k',label="GMRES")
+	ax.plot(tgres[:,1],tgres[:,0],color='r',label="GMRES")
+	ax.legend()
+	ax.tick_params(which='both',direction='in')
+	ax.grid(axis="x",color="green",alpha=.3,linewidth=2,linestyle=":")
+	ax.grid(axis="y",color="black",alpha=.5,linewidth=.5)	
+	fig.savefig(figfile,dpi=300)
+#########
+if (c==1 or c==2):
+	fdir="../../data/"
+	fname="2diff"
+	n=int(sys.argv[1])
+	m=int(sys.argv[2])
+	ftype=".csv"
+	ffile=fdir+fname+"-"+str(n)+"x"+str(m)+ftype
+	data=genfromtxt(ffile,delimiter=",")
+	L=0.4
+	W=0.3
+	x=linspace(0,L,num=n)
+	y=linspace(0,W,num=m)
+	xx,yy=meshgrid(x,y)
+
+	figdir="../../plts/"
+	figname="tcontour"
+	figtypes=[".eps",".png"]
+
+	fig,ax=subplots(figsize=(16,12))
+	ax.set(title="T (K)", xlabel="x (m)", ylabel="y (m)")
+	tcontour=contourf(xx,yy,data,cmap='hot')
+	fig.colorbar(tcontour)
+	figfile=figdir+figname+"-"+str(n)+"x"+str(m)+figtypes[c-1]
+	fig.savefig(figfile,dpi=300)

@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "C C++"
+		}
+	],
+	"settings": {
+		"git.ignoreLimitWarning": true,
+		"files.associations": {
+			"iostream": "cpp",
+			"chrono": "cpp"
+		}
+	}
+}

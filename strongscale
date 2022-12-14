@@ -1,0 +1,51 @@
+#!/usr/bin/bash
+
+echo "changing to build directory"
+
+cd $PWD/build/
+
+ml purge
+
+echo "loading PETSc/3.8.3-intel-2017A-Python-2.7.12  Libary"
+
+ml load PETSc/3.8.3-intel-2017A-Python-2.7.12
+
+echo " Load Succesful"
+
+echo "cleanng logs"
+
+cd ../logs/
+
+rm *
+
+echo "logs cleaned"
+
+cd ../build/
+
+echo " Running Simulation"
+
+mpirun -n 25 ./2diff.exe -da_grid_x 400  -da_grid_y 300  -dm_view :../logs/dm25.txt -log_view :../logs/profile25.txt  -ksp_monitor :../logs/res25.txt 
+
+mpirun -n 25 ./2diff.exe -da_grid_x 100  -da_grid_y 100  -dm_view :../logs/dm25gs.txt -log_view :../logs/profile1gs.txt  -ksp_monitor :../logs/res25gs.txt -ksp_type richardson -pc_type sor -pc_sor_omega 1 -ksp_initial_guess_nonzero 1  
+
+mpirun -n 20 ./2diff.exe -da_grid_x 400  -da_grid_y 300  -dm_view :../logs/dm20.txt -log_view :../logs/profile20.txt  -ksp_monitor :../logs/res20.txt 
+
+mpirun -n 20 ./2diff.exe -da_grid_x 100  -da_grid_y 100  -dm_view :../logs/dm20gs.txt -log_view :../logs/profile20gs.txt  -ksp_monitor :../logs/res20gs.txt -ksp_type richardson -pc_type sor -pc_sor_omega 1 -ksp_initial_guess_nonzero 1
+
+mpirun -n 15 ./2diff.exe -da_grid_x 400  -da_grid_y 300  -dm_view :../logs/dm.txt -log_view :../logs/profile.txt  -ksp_monitor :../logs/res.txt 
+
+mpirun -n 15 ./2diff.exe -da_grid_x 100  -da_grid_y 100  -dm_view :../logs/dm15gs.txt -log_view :../logs/profile15gs.txt  -ksp_monitor :../logs/res15gs.txt -ksp_type richardson -pc_type sor -pc_sor_omega 1 -ksp_initial_guess_nonzero 1
+
+mpirun -n 10 ./2diff.exe -da_grid_x 400  -da_grid_y 300  -dm_view :../logs/dm10.txt -log_view :../logs/profile10.txt  -ksp_monitor :../logs/res10.txt 
+
+mpirun -n 10 ./2diff.exe -da_grid_x 100  -da_grid_y 100  -dm_view :../logs/dm10gs.txt -log_view :../logs/profile10gs.txt  -ksp_monitor :../logs/res10gs.txt -ksp_type richardson -pc_type sor -pc_sor_omega 1 -ksp_initial_guess_nonzero 1
+
+mpirun -n 5 ./2diff.exe -da_grid_x 400  -da_grid_y 300  -dm_view :../logs/dm5.txt -log_view :../logs/profile5.txt  -ksp_monitor :../logs/res5.txt 
+
+mpirun -n 5 ./2diff.exe -da_grid_x 100  -da_grid_y 100  -dm_view :../logs/dm5gs.txt -log_view :../logs/profile5gs.txt  -ksp_monitor :../logs/res5gs.txt -ksp_type richardson -pc_type sor -pc_sor_omega 1 -ksp_initial_guess_nonzero 1
+
+mpirun -n 1 ./2diff.exe -da_grid_x 400  -da_grid_y 300  -dm_view :../logs/dm1.txt -log_view :../logs/profile1.txt  -ksp_monitor :../logs/res1.txt 
+
+mpirun -n 1 ./2diff.exe -da_grid_x 100  -da_grid_y 100  -dm_view :../logs/dm1gs.txt -log_view :../logs/profile1gs.txt  -ksp_initial_guess_nonzero -ksp_monitor :../logs/res1gs.txt -ksp_type richardson -pc_type sor -pc_sor_omega 1 -ksp_initial_guess_nonzero 1
+
+echo " Simulation succesful, data can be found at 2DIFF/data/ "

@@ -1,0 +1,47 @@
+#!/usr/bin/bash
+
+echo "changing to build directory"
+
+cd $PWD/build/
+
+ml purge
+
+echo "loading PETSc/3.8.3-intel-2017A-Python-2.7.12  Libary"
+
+ml load PETSc/3.8.3-intel-2017A-Python-2.7.12
+
+echo " Load Succesful"
+
+echo "cleanng logs"
+
+cd ../logs/
+
+rm *
+
+echo "logs cleaned"
+
+cd ../build/
+
+echo " Running Simulation"
+
+mpirun -n $1 ./2diff.exe -da_grid_x $2 -da_grid_y $3 -dm_view :../logs/dm.txt -log_view :../logs/profile.txt  -ksp_monitor :../logs/res.txt -ksp_initial_guess_nonzero 1  -ksp_type richardson -pc_type sor -pc_sor_omega 1 -ksp_rtol 1e-5
+
+#mpirun -n $1 ./2diff.exe -da_grid_x $2 -da_grid_y $3 -dm_view :../logs/dm.txt -log_view :../logs/profile.txt  -ksp_monitor :../logs/res.txt -ksp_type richardson -pc_type sor -pc_sor_omega 1 
+
+echo " Simulation succesful, data can be found in /data/"
+
+echo " Loading matplotlib"
+
+ml purge
+
+ml load matplotlib
+
+echo "changing to src/libs/ directory"
+
+cd ../src/libs/
+
+echo "Runing Post Processing"
+
+./post $2 $3 $4 $5
+
+echo " Post Processing Succesful, plot can be found in /plts/"

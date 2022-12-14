@@ -1,0 +1,6 @@
+#!/usr/bin/bash
+
+cd $PWD/batchproc/outputs/
+
+sbatch ../jobs/2diff.slurm
+
