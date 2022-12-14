@@ -2,12 +2,9 @@
 In this work, the 2-D Diffusion equation is solved on a structured grid using the Finite
 Difference Method, This is done using a parallelized code, utilizing the PETSc library’s C
 interface,run on the Terra cluster. Krylov Subspace Solvers were utilized and the solutions
-obtained (Time to convergence) through Gauss Siedel Iteration and the standard GMRES
+obtained (Time to convergence) through Gauss Siedel Iteration and the standard GMRES method are compared, along with a strong scaling analysis of both those solutions is illustrated.
 
-method are compared, along with a strong scaling analysis of both those solutions is illus-
-trated.
-
-1 Introduction
+## 1 Introduction
 The objective of this work is to solve the 2-D Diffusion equation on a structured grid using the
 Parallel PETSc Library, this section outlines the problem domain, boundary conditions and the
 anatomy of the governing differential equation.
@@ -16,10 +13,6 @@ A rectangular domain of unit thickness, with length 0.4 m and width 0.3m is boun
 boundary conditions on all four sides, the domain can be seen in Fig.1. The material is assumed
 to have thermal diffusivity (α) of 11.234 x 10−5m2/s and a thermal conductivity of 280 W/m.K,
 the plate is assumed to be homogenous and as having constant properties across the domain.
-
-Figure 1: The Computational Domain
-
-1
 
 The Dirichlet boundary conditions imposed on the system mean that the boundaries are all
 held at temperatures shown in Table.1, where the edge which is held at the label can be seen in
