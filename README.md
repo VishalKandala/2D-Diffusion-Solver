@@ -32,6 +32,7 @@ The solver successfully models the diffusion phenomenon, producing the expected 
 The contour plot below shows the final steady-state temperature field for a 400x300 grid, solved using the GMRES method. The solution correctly reflects the smoothing effect of the diffusion operator.
 
 ![Steady-State Temperature Contour](t_contours.png)
+
 *Figure 1: Steady-state temperature distribution solved on a 400x300 grid.*
 
 ### HPC Performance & Scalability
@@ -41,6 +42,7 @@ A strong scaling analysis was performed to measure the speed-up as the number of
 | Gauss-Seidel Scaling (100x100 grid) | GMRES Scaling (400x300 grid) |
 | :---: | :---: |
 | ![Gauss-Seidel Scaling](gs_speedup.png) | ![GMRES Scaling](gmres_speedup.png) |
+
 *Figure 2: Strong scaling speed-up for both solver methods.*
 
 ## Building and Running
