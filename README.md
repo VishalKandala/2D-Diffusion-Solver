@@ -1,4 +1,4 @@
-# PETSCHeat
+# 2D Diffusion Solver
 In this work, the 2-D Diffusion equation is solved on a structured grid using the Finite
 Difference Method, This is done using a parallelized code, utilizing the PETSc library’s C
 interface,run on the Terra cluster. Krylov Subspace Solvers were utilized and the solutions
